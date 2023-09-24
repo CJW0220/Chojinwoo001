@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>202034030 조진우</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+    
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border: 2px solid #000;
+                margin: 20px auto;
+                padding: 20px;
+                max-width: 800px;
+                width: 100%;
+            }
+    
+            #area1 {
+                background-color: skyblue;
+                padding: 10px;
+                width: 100%;
+                text-align: center;
+            }
+
+            #bottom-container {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                padding: 10px;
+            }
+
+            #area2, #area3 {
+                flex: 1;
+                padding: 10px;
+            }
+            #area2{
+                background-color: yellow;
+            }
+
+            #area3 {
+                background-color: green;
+            }
+    
+            .button-container {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+    
+            button {
+                margin: 5px;
+            }
+
+            #profile-image {
+                max-width: 100%;
+                height: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="area1">
+                <h2>영역1</h2>
+                <input type="text" id="nickname" placeholder="아이디 입력">
+                <button id="loginButton" onclick="login()">로그인</button>
+                <div id="userInfo" style="display: none;">
+                    <img id="profile-image" src="" alt="프로필 이미지">
+                    <p id="user-nickname"></p>
+                </div>
+            </div>
+            <div id="bottom-container">
+                <div id="area2">
+                    <h2>영역2</h2>
+                    <div class="button-container">
+                        <button onclick="showContent(1)">버튼1</button>
+                        <button onclick="showContent(2)">버튼2</button>
+                        <button onclick="moveContent(3)">버튼3</button>
+                    </div>
+                </div>
+                <div id="area3">
+                    <h2>영역3</h2>
+                    <p id="content"></p>
+                </div>
+            </div>
+        </div>
+    
+        <script>
+            let loggedIn = false;
+            let content1 = "202034030 조진우입니다.";
+            let content2 = "GOAT";
+            let content3 = "";
+            let userNickname = "";
+    
+            let selectedButton = null; 
+    
+            function login() {
+                const nickname = document.getElementById("nickname").value;
+                const loginButton = document.getElementById("loginButton");
+                const userInfo = document.getElementById("userInfo");
+                const userNicknameElement = document.getElementById("user-nickname");
+                const profileImageElement = document.getElementById("profile-image");
+    
+                if (!loggedIn) {
+                    loggedIn = true;
+                    loginButton.textContent = "로그아웃";
+                    userNickname = nickname;
+                    userNicknameElement.textContent = userNickname;
+                    profileImageElement.src = "프로필_이미지_링크_입력"; 
+                    userInfo.style.display = "block";
+                    content3 = "대표 사진을 띄웁니다.";
+                } else {
+                    loggedIn = false;
+                    loginButton.textContent = "로그인";
+                    userNickname = "";
+                    userNicknameElement.textContent = "";
+                    profileImageElement.src = "";
+                    userInfo.style.display = "none";
+                    content3 = "";
+                }
+    
+                updateContent();
+            }
+    
+            function showContent(buttonId) {
+                if (selectedButton === buttonId) {
+                    content3 = "";
+                    alert("내용이 없습니다.");
+                } else {
+                    if (buttonId === 1) {
+                        content3 = content1;
+                    } else if (buttonId === 2) {
+                        content3 = content2;
+                    }
+                    selectedButton = buttonId;
+                }
+    
+                updateContent();
+            }
+    
+            function moveContent(buttonId) {
+                if (selectedButton === null) {
+                    alert("복사할 내용이 없습니다.");
+                } else {
+                    if (buttonId === 3) {
+                        if (content3 === "") {
+                            alert("내용이 없습니다.");
+                        } else {
+                            if (selectedButton === 1 || selectedButton === 2) {
+                                content3 = selectedButton === 1 ? content1 : content2;
+                                if (selectedButton === 1) {
+                                    content1 = "";
+                                } else {
+                                    content2 = "";
+                                }
+                                selectedButton = null;
+                                alert("저장되었습니다.");
+                            }
+                        }
+                    }
+                }
+    
+                updateContent();
+            }
+    
+            function updateContent() {
+                const contentElement = document.getElementById("content");
+                contentElement.textContent = content3;
+            }
+        </script>
+    </body>
+    </html>
