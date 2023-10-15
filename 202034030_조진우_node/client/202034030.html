@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>202034030</title>
+</head>
+<body>
+    <button onclick="getData()">버튼</button>
+  <p id="response"></p>
+
+  <script>
+    function getData() {
+      fetch('http://localhost:2020/hi')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('response').innerText = data.message;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>
